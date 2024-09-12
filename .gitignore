@@ -1,7 +1,8 @@
 # folders #
 ###########
 venv/
+__pycache__/
+
 
 # files #
 #########
-__pycache__
