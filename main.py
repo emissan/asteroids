@@ -3,6 +3,8 @@
 # throughout this file
 import pygame
 from constants import *
+from circleshape import *
+from player import *
 
 def main():
     pygame.init()
@@ -11,19 +13,25 @@ def main():
     print(f"Screen height: {SCREEN_HEIGHT}")
     screen = pygame.display.set_mode(size=(SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
+    player = Player((SCREEN_WIDTH / 2),(SCREEN_HEIGHT / 2))
     dt = 0
 
     while True:
-        # will allow user to close the game using the X button
+        # Will allow user to close the game using the X button
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
         
-        # Fill the screen black
+        # Will the screen black
         pygame.Surface.fill(screen, (0, 0, 0))
+
+        # Draw the player on the screen
+        player.draw(screen)
+
+        # Refresh the display to show the triangle
         pygame.display.flip()
 
-        # limit the framerate to 60 FPS    
+        # Limit the framerate to 60 FPS    
         dt = clock.tick(60)/1000
 
 if __name__ == "__main__":
