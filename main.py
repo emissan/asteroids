@@ -21,7 +21,10 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-        
+            
+        # Allow the player to turn left or right. Calling before rendering.
+        player.update(dt)
+
         # Will the screen black
         pygame.Surface.fill(screen, (0, 0, 0))
 
