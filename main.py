@@ -3,8 +3,7 @@
 # throughout this file
 import pygame
 from constants import *
-from circleshape import *
-from player import *
+from player import Player
 
 def main():
     pygame.init()
@@ -13,8 +12,17 @@ def main():
     print(f"Screen height: {SCREEN_HEIGHT}")
     screen = pygame.display.set_mode(size=(SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
-    player = Player((SCREEN_WIDTH / 2),(SCREEN_HEIGHT / 2))
     dt = 0
+    
+    # Add group classes to hold and manage multiple objects for easier tracking
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+
+    # Add the player to both groups
+    Player.containers = (updatable, drawable)
+
+    # Player creation moved to after container creation to be correctly added to groups
+    player = Player((SCREEN_WIDTH / 2),(SCREEN_HEIGHT / 2))
 
     while True:
         # Will allow user to close the game using the X button
@@ -23,13 +31,15 @@ def main():
                 return
             
         # Allow the player to turn left or right. Calling before rendering.
-        player.update(dt)
+        for obj in updatable:
+            obj.update(dt)
 
         # Will the screen black
         pygame.Surface.fill(screen, (0, 0, 0))
 
         # Draw the player on the screen
-        player.draw(screen)
+        for obj in drawable:
+            obj.draw(screen)
 
         # Refresh the display to show the triangle
         pygame.display.flip()
