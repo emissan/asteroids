@@ -4,6 +4,8 @@
 import pygame
 from constants import *
 from player import Player
+from asteroid import Asteroid
+from asteroidfield import AsteroidField
 
 def main():
     pygame.init()
@@ -17,12 +19,16 @@ def main():
     # Add group classes to hold and manage multiple objects for easier tracking
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
+    asteroids = pygame.sprite.Group()
 
-    # Add the player to both groups
+    # Add the different classes to groups
     Player.containers = (updatable, drawable)
+    Asteroid.containers = (asteroids, updatable, drawable)
+    AsteroidField.containers = (updatable)
 
     # Player creation moved to after container creation to be correctly added to groups
     player = Player((SCREEN_WIDTH / 2),(SCREEN_HEIGHT / 2))
+    field = AsteroidField()
 
     while True:
         # Will allow user to close the game using the X button
