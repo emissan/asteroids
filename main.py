@@ -28,7 +28,7 @@ def main():
     Player.containers = (updatable, drawable)
     Asteroid.containers = (asteroids, updatable, drawable)
     AsteroidField.containers = (updatable)
-    Shot.containers = (updatable, drawable)
+    Shot.containers = (shots, updatable, drawable)
 
     # Player and asteroid field created
     player = Player((SCREEN_WIDTH / 2),(SCREEN_HEIGHT / 2))
@@ -43,11 +43,17 @@ def main():
         # Allow the player to turn left or right. Calling before rendering.
         for obj in updatable:
             obj.update(dt)
-
+        
+        # Detect if the player collides with an asteroid to end the game
         for asteroid in asteroids:
             if asteroid.collision(player):
                 print(f"Game over!")
                 sys.exit()
+        # Detect if the shot collides with an asteroid to destroy both
+            for shot in shots:
+                if asteroid.collision(shot):
+                    shot.kill()
+                    asteroid.kill() 
 
         # Will the screen black
         pygame.Surface.fill(screen, (0, 0, 0))
